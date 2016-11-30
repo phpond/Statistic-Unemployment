@@ -16,4 +16,5 @@ def main():
             dict_list.append(d.get(''))
         print(d)
     print(dict_list)
+    #ทดลองง
 main()
