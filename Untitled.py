@@ -7,13 +7,13 @@ def make_graph():
 
     #open worksheet
     book = open_workbook('C:/project_sex_v2.xlsx')
-    choose_sheet = int(input())
-    sheet = book.sheet_by_index(choose_sheet) #select sheet
+    choose_sheet = int(input()) #ืีnumber_sheet >> 0.ทั่วราชอาณาจักร 1.กลาง 2.เหนือ 3.ตะวันออกเฉียงเหนือ 4.ใต้
+    sheet = book.sheet_by_index(choose_sheet) #code select sheet
     male = [sheet.cell(1, col_index).value for col_index in range(1, 13)]
     female = [sheet.cell(2, col_index).value for col_index in range(1, 13)]
 
     #make graph
-    line_chart = pygal.Bar()
+    line_chart = pygal.Bar() #รูปแบบของ graph
     line_chart.title = sheet.cell(0, 0).value
     year = []
     for i in ["2556", "2557", "2558"]:
