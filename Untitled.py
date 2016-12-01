@@ -1,21 +1,29 @@
 """make graph"""
 import pygal                                                       # First import pygal
-line_chart = pygal.Bar()
-line_chart.title = 'อัตราการว่างงานภาคเกลาง'
-line_chart.x_labels = map(str, ["2556/1", "2556/2"])
-line_chart.add('ผู้หญิง', [0.6, 0.9, 0.7, 0.6, 0.7, 1.0, 0.9, 0.4, 0.9, 0.8, 1.0, 0.8])
-line_chart.add('ผู้ชาย', [0.6, 0.7, 0.9, 0.8, 0.9, 1.2, 0.9, 0.8, 1.1, 0.8, 1.0, 0.9])
-line_chart.render_to_file('bar_chart.svg')
+from xlrd import open_workbook
+from pygal.style import Style
 def make_graph():
     """make graph in section center"""
+
+    #open worksheet
+    book = open_workbook('C:/project_sex_v2.xlsx')
+    choose_sheet = int(input())
+    sheet = book.sheet_by_index(choose_sheet) #select sheet
+    male = [sheet.cell(1, col_index).value for col_index in range(1, 13)]
+    female = [sheet.cell(2, col_index).value for col_index in range(1, 13)]
+
+    #make graph
     line_chart = pygal.Bar()
-    line_chart.title = 'อัตราการว่างงานภาคกลาง'
+    line_chart.title = sheet.cell(0, 0).value
     year = []
     for i in ["2556", "2557", "2558"]:
         for j in range(1, 5):
             year.append(i+"/"+str(j))
+
     line_chart.x_labels = map(str, year)
-    line_chart.add('ผู้หญิง', [0.6, 0.9, 0.7, 0.6, 0.7, 1.0, 0.9, 0.4, 0.9, 0.8, 1.0, 0.8])
-    line_chart.add('ผู้ชาย', [0.6, 0.7, 0.9, 0.8, 0.9, 1.2, 0.9, 0.8, 1.1, 0.8, 1.0, 0.9])
-    line_chart.render_to_file('bar_chart.svg')
+    line_chart.add(sheet.cell(2, 0).value, female)
+    line_chart.add(sheet.cell(1, 0).value, male)
+    storage = 'bar_chart'+str(choose_sheet)+'.svg'
+    line_chart.render_to_file(storage)
+
 make_graph()
