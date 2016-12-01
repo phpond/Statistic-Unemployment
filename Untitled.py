@@ -1,7 +1,6 @@
 """make graph"""
 import pygal                                                       # First import pygal
 from xlrd import open_workbook
-from pygal.style import Style
 def make_graph():
     """make graph in section center"""
 
@@ -13,7 +12,7 @@ def make_graph():
     female = [sheet.cell(2, col_index).value for col_index in range(1, 13)]
 
     #make graph
-    line_chart = pygal.Bar() #รูปแบบของ graph
+    line_chart = pygal.Line() #รูปแบบของ graph
     line_chart.title = sheet.cell(0, 0).value
     year = []
     for i in ["2556", "2557", "2558"]:
